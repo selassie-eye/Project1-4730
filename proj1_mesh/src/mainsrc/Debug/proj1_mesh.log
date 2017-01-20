@@ -1,0 +1,13 @@
+﻿Build started 1/9/2017 2:56:28 PM.
+     1>Project "C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\mainsrc\proj1_mesh.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Debug\proj1_mesh.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\UF\teaching\CAP5705\prep_assignments\proj1_mesh\src\include\GL /IC:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\mainsrc\/../libst/include /IC:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\mainsrc\/../libst/ext/glew/include /IC:\UF\teaching\CAP5705\prep_assignments\proj1_mesh\src\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _CRT_SECURE_NO_WARNINGS /D NOMINMAX /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\uf_teaching\cap4730\prog\proj1test\proj1_mesh\src\libst\include\stglut.h(14): fatal error C1083: Cannot open include file: 'GL/glut.h': No such file or directory
+     1>Done Building Project "C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\mainsrc\proj1_mesh.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.96

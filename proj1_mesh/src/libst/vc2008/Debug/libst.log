@@ -1,0 +1,18 @@
+﻿Build started 1/9/2017 2:56:28 PM.
+     1>Project "C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\libst\vc2008\libst.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\libst.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1299,5): warning MSB8012: TargetPath(C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\libst\vc2008\../lib\libst.lib) does not match the Library's OutputFile property value (C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\libst\lib\Debug\libst.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+       Lib:
+         All outputs are up-to-date.
+         libst.vcxproj -> C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\libst\vc2008\../lib\libst.lib
+       FinalizeBuildStatus:
+         Deleting file "Debug\libst.unsuccessfulbuild".
+         Touching "Debug\libst.lastbuildstate".
+     1>Done Building Project "C:\UF_Teaching\CAP4730\prog\proj1test\proj1_mesh\src\libst\vc2008\libst.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.03
