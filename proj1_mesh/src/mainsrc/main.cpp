@@ -409,6 +409,9 @@ void KeyCallback(unsigned char key, int x, int y)
         if(gManualTriangleMesh!=0)
             gManualTriangleMesh->mDrawAxis=!gManualTriangleMesh->mDrawAxis;
         break;
+    case '1':
+        createSphere();
+        break;
 	case 'q':
 		exit(0);
     default:
@@ -523,9 +526,26 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 // TO DO: Using the CreateYourOwnMesh as an example
 // Store your mesh data in the triangleMesh
 //-----------------------------------------------------------
-void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vector<STVector3> *vertices)
+void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *faces, std::vector<STVector3> *vertices)
 {
+  for(std::vector<STVector3>::iterator it = vertices.begin(); it != vertices.end; it++){
+    tmesh->AddVertex(it);
+  }
+  for(std::vector<STVector3>::iterator it = faces.begin(); it != faces.end; it++){
+    tmesh->AddFace(it.i1, it.i2, it.i3);
+  }
 
+  tmesh->Build();
+  tmesh->mMaterialAmbient[0]=0.2f;
+  tmesh->mMaterialAmbient[1]=0.2f;
+  tmesh->mMaterialAmbient[2]=0.6f;
+  tmesh->mMaterialDiffuse[0]=0.2f;
+  tmesh->mMaterialDiffuse[1]=0.2f;
+  tmesh->mMaterialDiffuse[2]=0.6f;
+  tmesh->mMaterialSpecular[0]=0.6f;
+  tmesh->mMaterialSpecular[1]=0.6f;
+  tmesh->mMaterialSpecular[2]=0.6f;
+  tmesh->mShininess=8.0f;
 }
 
 
@@ -653,6 +673,7 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
+    createMySphereMesh(&gTriangleMeshes_sphere, &faces, &vertices)
 
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
