@@ -532,7 +532,7 @@ void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *fa
     STVector3 v = *it1;
     tmesh->AddVertex(v.x, v.y, v.z, 0, 0);
   }
-  for(std::vector<STVector3>::iterator it2 = faces->begin(); it2 != faces->end(); it2++){
+  for(std::vector<TriangleIndices>::iterator it2 = faces->begin(); it2 != faces->end(); it2++){
     TriangleIndices f = *it2;
     tmesh->AddFace(f.i1, f.i2, f.i3);
   }
