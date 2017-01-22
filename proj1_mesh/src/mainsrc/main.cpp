@@ -564,27 +564,7 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 //-------------------------------------------------------
 void initFaces(std::vector<TriangleIndices> *faces)
 {
-  faces->push_back(makeTIndices(1, 6, 2));
-  faces->push_back(makeTIndices(1, 11, 6));
-  faces->push_back(makeTIndices(1, 12, 8));
-  faces->push_back(makeTIndices(1, 8, 2));
-  faces->push_back(makeTIndices(1, 12, 11));
-
-  faces->push_back(makeTIndices(4, 10, 9));
-  faces->push_back(makeTIndices(4, 5, 9));
-  faces->push_back(makeTIndices(4, 3, 5));
-  faces->push_back(makeTIndices(4, 3, 7));
-  faces->push_back(makeTIndices(4, 7, 10));
-
-  faces->push_back(makeTIndices(5, 6, 9));
-  faces->push_back(makeTIndices(9, 2, 6));
-  faces->push_back(makeTIndices(9, 10, 2));
-  faces->push_back(makeTIndices(10, 2, 8));
-
-  faces->push_back(makeTIndices(5, 6, 11));
-  faces->push_back(makeTIndices(5, 11, 3));
-  faces->push_back(makeTIndices(3, 11, 12));
-  faces->push_back(makeTIndices(12, 7, 8));
+  
 }
 
 
