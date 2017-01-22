@@ -473,6 +473,18 @@ void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *fa
     TriangleIndices f = faces->at(i);
     tmesh->AddFace(f.i1, f.i2, f.i3);
   }
+
+  tmesh->Build();
+  tmesh->mMaterialAmbient[0]=0.2f;
+  tmesh->mMaterialAmbient[1]=0.2f;
+  tmesh->mMaterialAmbient[2]=0.6f;
+  tmesh->mMaterialDiffuse[0]=0.2f;
+  tmesh->mMaterialDiffuse[1]=0.2f;
+  tmesh->mMaterialDiffuse[2]=0.6f;
+  tmesh->mMaterialSpecular[0]=0.6f;
+  tmesh->mMaterialSpecular[1]=0.6f;
+  tmesh->mMaterialSpecular[2]=0.6f;
+  tmesh->mShininess=8.0f;
 }
 
 
@@ -668,6 +680,9 @@ void KeyCallback(unsigned char key, int x, int y)
         break;
     case '1':
         createSphere();
+        break;
+    case '2':
+        CreateYourOwnMesh();
         break;
 	case 'q':
 		exit(0);
