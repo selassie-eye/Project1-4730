@@ -15,6 +15,7 @@
 // As a rule, globals are Evil, but this is a small application
 // and the design of GLUT makes it hard to avoid them.
 //
+void createSphere(void);
 
 int globalCount;
 
