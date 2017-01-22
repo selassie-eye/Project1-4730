@@ -15,8 +15,6 @@
 // As a rule, globals are Evil, but this is a small application
 // and the design of GLUT makes it hard to avoid them.
 //
-void createSphere(void);
-
 int globalCount;
 
 typedef struct {
@@ -360,68 +358,6 @@ void SpecialKeyCallback(int key, int x, int y)
     glutPostRedisplay();
 }
 
-void KeyCallback(unsigned char key, int x, int y)
-{
-    // TO DO: Any new key press events must be added to this function
-
-    switch(key) {
-    case 's': {
-            //
-            // Take a screenshot, and save as screenshot.jpg
-            //
-            STImage* screenshot = new STImage(gWindowSizeX, gWindowSizeY);
-            screenshot->Read(0,0);
-            screenshot->Save("../../data/images/screenshot.jpg");
-            delete screenshot;
-        }
-        break;
-    case 'r':
-        resetCamera();
-        break;
-    case 'u':
-        resetUp();
-        break;
-    case 'm': // switch between the mesh you create and the mesh from file
-        mesh = !mesh;
-        break;
-    case 'n': // switch between normalMapping and displacementMapping
-        normalMapping = !normalMapping;
-        break;
-    // TO:DO do loop subdivision, uncomment this code
-    // modify it so that it works with your sphere
-    // simply make sure you are calling the functions
-    // on the correct mesh.
-    //---------------------------------
-    //case 'l':
-    //    if(mesh){
-    //        gTriangleMesh->LoopSubdivide();
-	//   if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
-	//		else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy(-
-    case 'f': // switch between smooth shading and flat shading
-        smooth = !smooth;
-        break;
-    case 'w':
-        for(unsigned int id=0;id<gTriangleMeshes.size();id++)
-            gTriangleMeshes[id]->Write("output.obj");
-        break;
-    case 'a':
-        for(unsigned int id=0;id<gTriangleMeshes.size();id++)
-            gTriangleMeshes[id]->mDrawAxis=!gTriangleMeshes[id]->mDrawAxis;
-        if(gManualTriangleMesh!=0)
-            gManualTriangleMesh->mDrawAxis=!gManualTriangleMesh->mDrawAxis;
-        break;
-    case '1':
-        createSphere();
-        break;
-	case 'q':
-		exit(0);
-    default:
-        break;
-    }
-
-    glutPostRedisplay();
-}
-
 /**
  * Mouse event handler
  */
@@ -693,6 +629,67 @@ void usage()
 	printf("usage: proj1_mesh vertShader fragShader objMeshFile normalMappingTexture displacementMappingTexture\n");
 }
 
+void KeyCallback(unsigned char key, int x, int y)
+{
+    // TO DO: Any new key press events must be added to this function
+
+    switch(key) {
+    case 's': {
+            //
+            // Take a screenshot, and save as screenshot.jpg
+            //
+            STImage* screenshot = new STImage(gWindowSizeX, gWindowSizeY);
+            screenshot->Read(0,0);
+            screenshot->Save("../../data/images/screenshot.jpg");
+            delete screenshot;
+        }
+        break;
+    case 'r':
+        resetCamera();
+        break;
+    case 'u':
+        resetUp();
+        break;
+    case 'm': // switch between the mesh you create and the mesh from file
+        mesh = !mesh;
+        break;
+    case 'n': // switch between normalMapping and displacementMapping
+        normalMapping = !normalMapping;
+        break;
+    // TO:DO do loop subdivision, uncomment this code
+    // modify it so that it works with your sphere
+    // simply make sure you are calling the functions
+    // on the correct mesh.
+    //---------------------------------
+    //case 'l':
+    //    if(mesh){
+    //        gTriangleMesh->LoopSubdivide();
+	//   if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
+	//		else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy(-
+    case 'f': // switch between smooth shading and flat shading
+        smooth = !smooth;
+        break;
+    case 'w':
+        for(unsigned int id=0;id<gTriangleMeshes.size();id++)
+            gTriangleMeshes[id]->Write("output.obj");
+        break;
+    case 'a':
+        for(unsigned int id=0;id<gTriangleMeshes.size();id++)
+            gTriangleMeshes[id]->mDrawAxis=!gTriangleMeshes[id]->mDrawAxis;
+        if(gManualTriangleMesh!=0)
+            gManualTriangleMesh->mDrawAxis=!gManualTriangleMesh->mDrawAxis;
+        break;
+    case '1':
+        createSphere();
+        break;
+	case 'q':
+		exit(0);
+    default:
+        break;
+    }
+
+    glutPostRedisplay();
+}
 
 
 //-------------------------------------------------
