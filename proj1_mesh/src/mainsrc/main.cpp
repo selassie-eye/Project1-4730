@@ -529,10 +529,12 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *faces, std::vector<STVector3> *vertices)
 {
   for(std::vector<STVector3>::iterator it = vertices->begin(); it != vertices.end; it++){
-    tmesh->AddVertex(*it.x, *it.y, *it.z, 0, 0);
+    STVector3 v = *it
+    tmesh->AddVertex(v.x, v.y, v.z, 0, 0);
   }
   for(std::vector<STVector3>::iterator it = faces->begin(); it != faces.end; it++){
-    tmesh->AddFace(*it.i1, *it.i2, *it.i3);
+    TriangleIndices f = *it
+    tmesh->AddFace(f.i1, f.i2, f.i3);
   }
 
   tmesh->Build();
@@ -638,7 +640,7 @@ void initVertices(std::vector<STVector3> *vertices)
 // The sphere is a unit iscosphere centered at the origin (0,0,0).
 // First add a key press event in KeyCallback that will call this function
 //----------------------------------------------------------------
-void createSphere()
+void createSphere(void)
 {
     globalCount = 0; //for subdivisions // TO DO: Optional remove this as a global var
 
@@ -673,7 +675,7 @@ void createSphere()
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
-    STTriangleMesh tmesh = new STTriangleMesh();
+    STTriangleMesh *tmesh = new STTriangleMesh();
     createMySphereMesh(&tmesh, &faces, &vertices);
 
     // save the result sphere
