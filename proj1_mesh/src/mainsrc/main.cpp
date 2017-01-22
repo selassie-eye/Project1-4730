@@ -564,7 +564,7 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 //-------------------------------------------------------
 void initFaces(std::vector<TriangleIndices> *faces)
 {
-  
+
 }
 
 
@@ -659,7 +659,7 @@ int main(int argc, char** argv)
     // TO DO: Change this file name to change the .obj model that is loaded
     // Optional: read in the file name from the command line > proj1_mesh myfile.obj
     //--------------------------------------------------------------------------
-    meshOBJ        = std::string("../../data/meshes/cone.obj");
+    meshOBJ        = std::string("../../data/meshes/"+argv[1]);
 
 
     vertexShader   = std::string("kernels/default.vert");
