@@ -43,9 +43,9 @@ FRAMEWORKS += OpenGL GLUT AppKit IOKit
 
 #
 # Mac users need to point to the libjpeg and libpng directories
-# 
+#
 # The default location of a fink install is given below.
-# 
+#
 EXTRA_LIB_DIRS := /opt/local/lib
 EXTRA_INC_DIRS  := /opt/local/include glew/include
 
@@ -59,7 +59,7 @@ LIBS	   += glut GL GLU GLEW
 #
 # hack for myth machines.  Add /usr/lib as an explicit lib dir so
 # it gets picked up instead of /usr/pubsw/lib.
-# 
+#
 
 EXTRA_LIB_DIRS := /usr/lib64 /usr/lib glew/lib
 EXTRA_INC_DIRS := glew/include
@@ -110,5 +110,3 @@ clean:
 
 release:
 	@make --no-print-directory RELEASE=1
-
-

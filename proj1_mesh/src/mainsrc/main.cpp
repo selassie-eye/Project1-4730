@@ -410,7 +410,7 @@ void KeyCallback(unsigned char key, int x, int y)
             gManualTriangleMesh->mDrawAxis=!gManualTriangleMesh->mDrawAxis;
         break;
     case '1':
-        createSphere();
+        this->createSphere();
         break;
 	case 'q':
 		exit(0);
@@ -528,10 +528,10 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 //-----------------------------------------------------------
 void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *faces, std::vector<STVector3> *vertices)
 {
-  for(std::vector<STVector3>::iterator it = vertices.begin(); it != vertices.end; it++){
-    tmesh->AddVertex(it);
+  for(std::vector<STVector3>::iterator it = vertices->begin(); it != vertices.end; it++){
+    tmesh->AddVertex(it.x, it.y, it.z, 0, 0);
   }
-  for(std::vector<STVector3>::iterator it = faces.begin(); it != faces.end; it++){
+  for(std::vector<STVector3>::iterator it = faces->begin(); it != faces.end; it++){
     tmesh->AddFace(it.i1, it.i2, it.i3);
   }
 
@@ -673,7 +673,8 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
-    createMySphereMesh(&gTriangleMeshes_sphere, &faces, &vertices)
+    STTriangleMesh tmesh = new STTriangleMesh();
+    createMySphereMesh(&tmesh, &faces, &vertices);
 
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
