@@ -528,11 +528,11 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 //-----------------------------------------------------------
 void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *faces, std::vector<STVector3> *vertices)
 {
-  for(std::vector<STVector3>::iterator it = vertices->begin(); it != vertices.end(); it++){
+  for(std::vector<STVector3>::iterator it = vertices->begin(); it != vertices->end(); it++){
     STVector3 v = *it;
     tmesh->AddVertex(v.x, v.y, v.z, 0, 0);
   }
-  for(std::vector<STVector3>::iterator it = faces->begin(); it != faces.end(); it++){
+  for(std::vector<STVector3>::iterator it = faces->begin(); it != faces->end(); it++){
     TriangleIndices f = *it;
     tmesh->AddFace(f.i1, f.i2, f.i3);
   }
