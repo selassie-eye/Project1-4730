@@ -463,16 +463,9 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 // TO DO: Using the CreateYourOwnMesh as an example
 // Store your mesh data in the triangleMesh
 //-----------------------------------------------------------
-void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *faces, std::vector<STVector3> *vertices)
+void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vector<STVector3> *vertices)
 {
-  for(int i = 0; i < vertices->size(); i++){
-    STVector3 v = vertices->at(i);
-    tmesh->AddVertex(v.x, v.y, v.z, 0, 0);
-  }
-  for(int i = 0; i < faces->size(); i++){
-    TriangleIndices f = faces->at(i);
-    tmesh->AddFace(f.i1, f.i2, f.i3);
-  }
+
 
   tmesh->Build();
   tmesh->mMaterialAmbient[0]=0.2f;
@@ -612,7 +605,9 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
-    createMySphereMesh(gTriangleMeshes_sphere[0], &faces, &vertices);
+    for(int i = 0; i < faces.size(); i++){
+      createMySphereMesh(gTriangleMeshes_sphere[0], faces.at(i), &vertices);
+    }
 
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
