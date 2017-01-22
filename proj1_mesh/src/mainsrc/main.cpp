@@ -676,7 +676,7 @@ void createSphere(void)
     //-----------------------------------------------------------------
 
     STTriangleMesh *tmesh = new STTriangleMesh();
-    createMySphereMesh(&tmesh, &faces, &vertices);
+    createMySphereMesh(tmesh, &faces, &vertices);
 
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
