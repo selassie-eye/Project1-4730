@@ -410,7 +410,7 @@ void KeyCallback(unsigned char key, int x, int y)
             gManualTriangleMesh->mDrawAxis=!gManualTriangleMesh->mDrawAxis;
         break;
     case '1':
-        this->createSphere();
+        createSphere();
         break;
 	case 'q':
 		exit(0);
@@ -529,10 +529,10 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 void createMySphereMesh(STTriangleMesh  *tmesh, std::vector<TriangleIndices> *faces, std::vector<STVector3> *vertices)
 {
   for(std::vector<STVector3>::iterator it = vertices->begin(); it != vertices.end; it++){
-    tmesh->AddVertex(it.x, it.y, it.z, 0, 0);
+    tmesh->AddVertex(*it.x, *it.y, *it.z, 0, 0);
   }
   for(std::vector<STVector3>::iterator it = faces->begin(); it != faces.end; it++){
-    tmesh->AddFace(it.i1, it.i2, it.i3);
+    tmesh->AddFace(*it.i1, *it.i2, *it.i3);
   }
 
   tmesh->Build();
@@ -638,7 +638,7 @@ void initVertices(std::vector<STVector3> *vertices)
 // The sphere is a unit iscosphere centered at the origin (0,0,0).
 // First add a key press event in KeyCallback that will call this function
 //----------------------------------------------------------------
-void createSphere(void)
+void createSphere()
 {
     globalCount = 0; //for subdivisions // TO DO: Optional remove this as a global var
 
