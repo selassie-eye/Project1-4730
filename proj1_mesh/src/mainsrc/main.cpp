@@ -456,15 +456,17 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
 int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vector<STVector3> *vertices)
 {
         int larger = p1 > p2 ? p1 : p2;
+        std::cout<<"    larger = " << larger << "\n";
         int smaller = p1 < p2 ? p1 : p2;
+        std::cout<<"    Smaller = " << smaller <<"\n";
         long key = (smaller << 16) + larger;
-        std::cout<<"    Key generated\n";
+        std::cout<<"    Key generated, key = " << key <<"\n";
         int index = 0;
 
         if (midPointIndices->count(key) == 0){
           std::cout<<"    Midpoint not found; beginning calculation\n";
-          STVector3 point1 = vertices->at(larger-1);
-          STVector3 point2 = vertices->at(smaller-1);
+          STVector3 point1 = vertices->at(larger);
+          STVector3 point2 = vertices->at(smaller);
           STVector3 mid = STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
 
           offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
