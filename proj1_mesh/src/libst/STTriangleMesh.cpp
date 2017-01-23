@@ -140,7 +140,7 @@ void STTriangleMesh::Draw(bool smooth) const
     glMaterialfv(GL_FRONT, GL_DIFFUSE,   mMaterialDiffuse);
     glMaterialfv(GL_FRONT, GL_SPECULAR,  mMaterialSpecular);
     glMaterialfv(GL_FRONT, GL_SHININESS, &mShininess);
-    
+
     glBegin(GL_TRIANGLES);
     for (unsigned int i = 0; i < mFaces.size(); i++) {
         STFace* f=mFaces[i];
@@ -148,11 +148,11 @@ void STTriangleMesh::Draw(bool smooth) const
             if(smooth)
                 if(!mSimpleMesh)
                     glNormal3f(f->normals[j]->x,f->normals[j]->y,f->normals[j]->z);
-                else 
+                else
                     glNormal3f(f->v[j]->normal.x,f->v[j]->normal.y,f->v[j]->normal.z);
             else
                 glNormal3f(f->normal.x,f->normal.y,f->normal.z);
-            
+
             glTexCoord2f(f->texPos[j]->x, f->texPos[j]->y);
             glVertex3f(f->v[j]->pt.x,f->v[j]->pt.y,f->v[j]->pt.z);
         }
@@ -213,7 +213,7 @@ bool STTriangleMesh::Read(const std::string& filename)
                 if(mSimpleMesh){
                     in>>p1; in.ignore(100, ' ');
                     in>>p2; in.ignore(100, ' ');
-                    in>>p3; 
+                    in>>p3;
                     mFaces.push_back(new STFace(mVertices[p1-1],mVertices[p2-1],mVertices[p3-1]));
                 }
                 else{
@@ -248,7 +248,7 @@ bool STTriangleMesh::Write(const std::string& filename)
     // The format-specific subroutines are each implemented in
     // a different file.
     std::string ext = STGetExtension( filename );
-    if (ext.compare("OBJ") == 0){
+    if (ext.compare("obj") == 0){
         std::ofstream out( filename.c_str(), std::ios::out );
 
         if( !out ){
@@ -348,7 +348,7 @@ bool STTriangleMesh::UpdateGeometry()
 bool STTriangleMesh::CalculateTextureCoordinatesViaSphericalProxy()
 {
 	for(unsigned int i=0;i<mFaces.size();i++){
-		STFace* face=mFaces[i];		
+		STFace* face=mFaces[i];
 		for(int v=0;v<3;v++){
 			STPoint3 point=face->v[v]->pt;
 			float r=sqrt(pow(point.x,2)+pow(point.y,2)+pow(point.z,2));
@@ -369,25 +369,25 @@ bool STTriangleMesh::CalculateTextureCoordinatesViaSphericalProxy()
 
 STFace* STTriangleMesh::NextAdjFace(STVertex *v, STFace *f)
 {
-    if( v == f->v[0] ) 
+    if( v == f->v[0] )
         return f->adjF[1];
-    else if( v == f->v[1] ) 
+    else if( v == f->v[1] )
         return f->adjF[2];
-    else if( v == f->v[2] ) 
+    else if( v == f->v[2] )
         return f->adjF[0];
-    else 
+    else
         return 0;
 }
 
 STFace* STTriangleMesh::NextAdjFaceReverse(STVertex *v, STFace *f)
 {
-    if( v == f->v[0] ) 
+    if( v == f->v[0] )
         return f->adjF[2];
-    else if( v == f->v[1] ) 
+    else if( v == f->v[1] )
         return f->adjF[0];
-    else if( v == f->v[2] ) 
+    else if( v == f->v[2] )
         return f->adjF[1];
-    else 
+    else
         return 0;
 }
 
@@ -500,7 +500,7 @@ void STTriangleMesh::LoopSubdivide()
     }
     std::swap(mFaces,newFaces);
     for(unsigned int i=0;i<newFaces.size();i++)delete newFaces[i];
-    
+
     Build();
 }
 
@@ -543,9 +543,9 @@ std::string STTriangleMesh::LoadObj(std::vector<STTriangleMesh*>& output_meshes,
 	else if ((l = filename.find_last_of('\\')) != std::string::npos)
 		base = filename.substr(0, l+1);
 	std::string err = tinyobj::LoadObj(shapes, materials, filename.c_str(), base.c_str());
-    
+
     std::cout<<"#shapes="<<shapes.size()<<" #materials="<<materials.size()<<std::endl;
-    
+
 
     for(unsigned int mesh_id=0; mesh_id<shapes.size(); mesh_id++)
     {
@@ -594,7 +594,7 @@ std::string STTriangleMesh::LoadObj(std::vector<STTriangleMesh*>& output_meshes,
 				stmesh->mSurfaceColorImg = new STImage(base+colorMap);
 		        stmesh->mSurfaceColorTex = new STTexture(stmesh->mSurfaceColorImg,STTexture::kNone);
 			}
-  		
+
             stmesh->mShininess = 8.;  // # between 1 and 128.
         }
 
