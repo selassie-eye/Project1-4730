@@ -248,7 +248,7 @@ bool STTriangleMesh::Write(const std::string& filename)
     // The format-specific subroutines are each implemented in
     // a different file.
     std::string ext = STGetExtension( filename );
-    if (ext.compare("obj") == 0){
+    if (ext.compare("OBJ") == 0){
         std::ofstream out( filename.c_str(), std::ios::out );
 
         if( !out ){

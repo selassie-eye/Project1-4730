@@ -660,7 +660,7 @@ void createSphere(void)
     // save the result sphere
     std::cout<<"Mesh size: " << gTriangleMeshes_sphere.size() << "\n";
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
-        gTriangleMeshes_sphere[id]->Write("..\..\data\meshes\mysphere.obj");
+        gTriangleMeshes_sphere[id]->Write("../../data/meshes/mysphere.obj");
 
         std::cout<<"Sphere saved\n";
 }
