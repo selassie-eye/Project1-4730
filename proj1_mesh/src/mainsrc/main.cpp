@@ -409,6 +409,9 @@ void KeyCallback(unsigned char key, int x, int y)
         if(gManualTriangleMesh!=0)
             gManualTriangleMesh->mDrawAxis=!gManualTriangleMesh->mDrawAxis;
         break;
+    case '1':
+        createSphere();
+        break;
 	case 'q':
 		exit(0);
     default:
@@ -673,7 +676,7 @@ void createSphere(void)
     for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
       createMySphereMesh(gTriangleMeshes_sphere[i], *it, vertices);
     }
-    
+
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
         gTriangleMeshes_sphere[id]->Write("..\..\data\meshes\mysphere.obj");
