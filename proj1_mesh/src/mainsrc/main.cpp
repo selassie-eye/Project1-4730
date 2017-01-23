@@ -500,6 +500,7 @@ void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vecto
   }
   tmesh->AddFace(face.i1, face.i2, face.i3);
   std::cout<<"  Face added to mesh\n";
+
 }
 
 
@@ -643,6 +644,18 @@ void createSphere(void)
       gTriangleMeshes_sphere.push_back(temp);
     }
     std::cout<<"CreateMySphereMesh complete\n";
+
+    gTriangleMeshes_sphere.back()->Build();
+    gTriangleMeshes_sphere.back()->mMaterialAmbient[0]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialAmbient[1]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialAmbient[2]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialDiffuse[0]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialDiffuse[1]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialDiffuse[2]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialSpecular[0]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialSpecular[1]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialSpecular[2]=0.6f;
+    gTriangleMeshes_sphere.back()->mShininess=8.0f;
 
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
