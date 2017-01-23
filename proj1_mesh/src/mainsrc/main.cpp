@@ -212,7 +212,7 @@ void ZoomCamera(float delta_y)
     STVector3 direction = mLookAt - mPosition;
     float magnitude = direction.Length();
     direction.Normalize();
-    float zoom_rate = 0.1f*magnitude < 0.5f ? .1f*magnitude : .5f;
+    float zoom_rate = 0.f*magnitude < 0.5f ? .1f*magnitude : .5f;
     if(delta_y * zoom_rate + magnitude > 0)
     {
         mPosition += (delta_y * zoom_rate) * direction;
@@ -439,6 +439,11 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
     vertices->push_back(STVector3(p.x*radius/length, p.y*radius/length, p.z*radius/length));
 
     return(globalCount + 1);
+    std::cout<<"    OFFSET!\n";
+    std::ofstream debug = ("../../data/meshes/debug.txt", std::ofstream:out);
+    debug << "OFFSET!\n";
+    debug.close();
+
 
 }
 
@@ -452,9 +457,30 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
 //-----------------------------------------------------------------------
 int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vector<STVector3> *vertices)
 {
-
+        int larger = p1 > p2 ? p1 : p2;
+        std::cout<<"    larger = " << larger << "\n";
+        int smaller = p1 < p2 ? p1 : p2;
+        std::cout<<"    Smaller = " << smaller << "\n";
+        long key = (smaller << 16) + larger;
+        std::cout<<"    Key generated, key = " << key <<"\n";
         int index = 0;
 
+        if (midPointIndices->count(key) == 0){
+          std::cout<<"    Midpoint not found; beginning calculation\n";
+          STVector3 point1 = vertices->at(larger);
+          STVector3 point2 = vertices->at(smaller);
+          STVector3 mid = STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
+
+          std::cout<<"    Offset starts here\n";
+          offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
+          index = vertices->size()-1;
+          midPointIndices->insert(std::pair<long, int>(key, index));
+          std::cout<<"    Midpoint added, index = " << index << "\n";
+        }
+        else{
+          index = midPointIndices->find(key)->second;
+          std::cout<<"    Midpoint found, index = " << index << "\n";
+        }
         return(index);
 }
 
@@ -465,6 +491,18 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 //-----------------------------------------------------------
 void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vector<STVector3> *vertices)
 {
+  STVector3 temp;
+  std::cout<<"  Temp vertex created.\n";
+  for (int i = 0; tmesh->mVertices.size() != vertices->size(); i++){
+    std::cout<<"  Number of vertices in tmesh: " << tmesh->mVertices.size() << "\n";
+    std::cout<<"  Number of vertices in total: " << vertices->size() << "\n";
+    temp = vertices->at(i);
+    std::cout<<"  Temp assigned\n";
+    tmesh->AddVertex(temp.x, temp.y, temp.z);
+    std::cout<<"  Vertex added to mesh\n";
+  }
+  tmesh->AddFace(face.i1, face.i2, face.i3);
+  std::cout<<"  Face added to mesh\n";
 
 
   tmesh->Build();
@@ -489,7 +527,9 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 {
     std::multimap<long, int> midPointIndices;
     int nFaces = facesIn->size();
+    std::cout<<"  Midpoint map, face counter initialized\n";
 
+    std::cout<<"  Beginning midpoint finding\n";
     for (int i = 0; i < level; i++) {
 
           for(int j = 0; j < nFaces; ++j) {
@@ -516,27 +556,55 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 //-------------------------------------------------------
 void initFaces(std::vector<TriangleIndices> *faces)
 {
-  faces->push_back(makeTIndices(1, 6, 2));
-  faces->push_back(makeTIndices(1, 11, 6));
-  faces->push_back(makeTIndices(1, 12, 8));
-  faces->push_back(makeTIndices(1, 8, 2));
-  faces->push_back(makeTIndices(1, 12, 11));
 
-  faces->push_back(makeTIndices(4, 10, 9));
-  faces->push_back(makeTIndices(4, 5, 9));
-  faces->push_back(makeTIndices(4, 3, 5));
-  faces->push_back(makeTIndices(4, 3, 7));
-  faces->push_back(makeTIndices(4, 7, 10));
+  // 5 faces around point 0
+  faces->push_back(makeTIndices(0, 11, 5));
+  faces->push_back(makeTIndices(0, 5, 1));
+  faces->push_back(makeTIndices(0, 1, 7));
+  faces->push_back(makeTIndices(0, 7, 10));
+  faces->push_back(makeTIndices(0, 10, 11));
 
-  faces->push_back(makeTIndices(5, 6, 9));
-  faces->push_back(makeTIndices(9, 2, 6));
-  faces->push_back(makeTIndices(9, 10, 2));
-  faces->push_back(makeTIndices(10, 2, 8));
+  // 5 adjacent faces
+  faces->push_back(makeTIndices(1, 5, 9));
+  faces->push_back(makeTIndices(5, 11, 4));
+  faces->push_back(makeTIndices(11, 10, 2));
+  faces->push_back(makeTIndices(10, 7, 6));
+  faces->push_back(makeTIndices(7, 1, 8));
 
-  faces->push_back(makeTIndices(5, 6, 11));
-  faces->push_back(makeTIndices(5, 11, 3));
-  faces->push_back(makeTIndices(3, 11, 12));
-  faces->push_back(makeTIndices(12, 7, 8));
+  // 5 faces around point 3
+  faces->push_back(makeTIndices(3, 9, 4));
+  faces->push_back(makeTIndices(3, 4, 2));
+  faces->push_back(makeTIndices(3, 2, 6));
+  faces->push_back(makeTIndices(3, 6, 8));
+  faces->push_back(makeTIndices(3, 8, 9));
+
+  // 5 adjacent faces
+  faces->push_back(makeTIndices(4, 9, 5));
+  faces->push_back(makeTIndices(2, 4, 11));
+  faces->push_back(makeTIndices(6, 2, 10));
+  faces->push_back(makeTIndices(8, 6, 7));
+  faces->push_back(makeTIndices(9, 8, 1));
+
+  // faces->push_back(makeTIndices(10, 0, 7));
+  // faces->push_back(makeTIndices(11, 0, 10));
+  // faces->push_back(makeTIndices(5, 0, 11));
+  // faces->push_back(makeTIndices(1, 0, 5));
+  // faces->push_back(makeTIndices(7, 0, 1));
+  // faces->push_back(makeTIndices(2, 11, 10));
+  // faces->push_back(makeTIndices(2, 10, 6));
+  // faces->push_back(makeTIndices(2, 6, 3));
+  // faces->push_back(makeTIndices(2, 3, 4));
+  // faces->push_back(makeTIndices(2, 4, 11));
+  // faces->push_back(makeTIndices(9, 1, 5));
+  // faces->push_back(makeTIndices(9, 5, 4));
+  // faces->push_back(makeTIndices(9, 4, 3));
+  // faces->push_back(makeTIndices(9, 3, 8));
+  // faces->push_back(makeTIndices(9, 8, 1));
+  // faces->push_back(makeTIndices(5, 11, 4));
+  // faces->push_back(makeTIndices(1, 8, 7));
+  // faces->push_back(makeTIndices(6, 7, 8));
+  // faces->push_back(makeTIndices(6, 10, 7));
+  // faces->push_back(makeTIndices(6, 8, 3));
 }
 
 
@@ -576,19 +644,25 @@ void createSphere(void)
 
     // triangle mesh object
     std::vector<STTriangleMesh *> gTriangleMeshes_sphere;
+    std::cout<<"Mesh initialized\n";
 
     // vertices
     std::vector<STVector3> vertices;
+    std::cout<<"Vertices initialized\n";
 
     // Creates the initial verticies
     initVertices(&vertices);
+    std::cout<<"Vertices assigned\n";
 
     //-----------------------------------------------------
     // TO DO: create the faces of the intIcosahedron
     // Place your code in the function initFaces()
     //-----------------------------------------------------
     std::vector<TriangleIndices> faces;
+    std::cout<<"Faces initialized\n";
     initFaces(&faces);
+    std::cout<<"Faces assigned\n";
+
 
     //---------------------------------------------------------------
     // TO DO: Recursively split each triangle into four triangles
@@ -597,7 +671,9 @@ void createSphere(void)
     //----------------------------------------------------------------
     std::vector<TriangleIndices> newfaces;
     int levels = 3;
+    std::cout<<"Beginning subdivision\n";
     subDivideTriangles(levels, &faces, &newfaces, &vertices);
+    std::cout<<"Subdivision Complete\n";
 
     //-----------------------------------------------------------------
     // TO DO: Once faces are generated, add each triangle to the
@@ -605,14 +681,40 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
+<<<<<<< HEAD
     for(int i = 0; i < faces.size(); i++){
       createMySphereMesh(gTriangleMeshes_sphere[0], faces.at(i), &vertices);
     }
+=======
+    std::cout<<"Beginning createMySphereMesh\n";
+    STTriangleMesh *temp = new STTriangleMesh();
+    for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
+      createMySphereMesh(temp, *it, &vertices);
+      gTriangleMeshes_sphere.push_back(temp);
+    }
+    std::cout<<"CreateMySphereMesh complete\n";
+
+    gTriangleMeshes_sphere.back()->Build();
+    gTriangleMeshes_sphere.back()->mMaterialAmbient[0]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialAmbient[1]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialAmbient[2]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialDiffuse[0]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialDiffuse[1]=0.2f;
+    gTriangleMeshes_sphere.back()->mMaterialDiffuse[2]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialSpecular[0]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialSpecular[1]=0.6f;
+    gTriangleMeshes_sphere.back()->mMaterialSpecular[2]=0.6f;
+    gTriangleMeshes_sphere.back()->mShininess=8.0f;
+>>>>>>> branch-1
 
     // save the result sphere
-    for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
-        gTriangleMeshes_sphere[id]->Write("..\..\data\meshes\mysphere.obj");
+    std::cout<<"Mesh size: " << gTriangleMeshes_sphere.size() << "\n";
+    //for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
+        //gTriangleMeshes_sphere[id]->Write("../../data/meshes/mysphere.obj");
+        gTriangleMeshes_sphere.back()->Write("../../data/meshes/mysphere.obj");
 
+
+        std::cout<<"Sphere saved\n";
 }
 
 
@@ -676,9 +778,12 @@ void KeyCallback(unsigned char key, int x, int y)
     case '1':
         createSphere();
         break;
+<<<<<<< HEAD
     case '2':
         CreateYourOwnMesh();
         break;
+=======
+>>>>>>> branch-1
 	case 'q':
 		exit(0);
     default:
@@ -687,6 +792,10 @@ void KeyCallback(unsigned char key, int x, int y)
 
     glutPostRedisplay();
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch-1
 
 
 //-------------------------------------------------
@@ -698,7 +807,8 @@ int main(int argc, char** argv)
     // TO DO: Change this file name to change the .obj model that is loaded
     // Optional: read in the file name from the command line > proj1_mesh myfile.obj
     //--------------------------------------------------------------------------
-    meshOBJ        = std::string("../../data/meshes/cone.obj");
+    meshOBJ        = std::string("../../data/meshes/");
+    meshOBJ        += argv[1];
 
 
     vertexShader   = std::string("kernels/default.vert");
