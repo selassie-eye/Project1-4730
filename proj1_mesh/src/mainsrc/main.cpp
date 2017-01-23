@@ -462,8 +462,8 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 
         if (midPointIndices->count(key) == 0){
           std::cout<<"    Midpoint not found; beginning calculation\n";
-          STVector3 point1 = vertices->at(larger);
-          STVector3 point2 = vertices->at(smaller);
+          STVector3 point1 = vertices->at(p1);
+          STVector3 point2 = vertices->at(p2);
           STVector3 mid = STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
 
           std::cout<<"    Offset starts here\n";
