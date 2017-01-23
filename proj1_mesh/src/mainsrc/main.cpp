@@ -438,8 +438,8 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
 
     vertices->push_back(STVector3(p.x*radius/length, p.y*radius/length, p.z*radius/length));
 
-    return(globalCount + 1);
     std::cout<<"    OFFSET!\n";
+    return(globalCount + 1);
 }
 
 
@@ -703,7 +703,7 @@ void createSphere(void)
         gTriangleMeshes_sphere.back()->Write("../../data/meshes/mysphere.obj");
 
 
-        std::cout<<"Sphere saved\n";
+        std::cout<<"Sphere saved, globalCount = " << globalCount << "\n";
 }
 
 
