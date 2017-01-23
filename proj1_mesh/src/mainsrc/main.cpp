@@ -440,6 +440,8 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
     vertices->push_back(STVector3(p.x*radius/length, p.y*radius/length, p.z*radius/length));
 
     return(globalCount + 1);
+    std::cout<<"    OFFSET!\n";
+
 
 }
 
@@ -456,9 +458,11 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
         int larger = p1 > p2 ? p1 : p2;
         int smaller = p1 < p2 ? p1 : p2;
         long key = (smaller << 16) + larger;
+        std::cout<<"    Key generated\n";
         int index = 0;
 
         if (midPointIndices->count(key) == 0){
+          std::cout<<"    Midpoint not found; beginning calculation\n";
           STVector3 point1 = vertices->at(larger-1);
           STVector3 point2 = vertices->at(smaller-1);
           STVector3 mid = STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
@@ -466,9 +470,11 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
           offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
           index = vertices->size()-1;
           midPointIndices->insert(std::pair<long, int>(key, index));
+          std::cout<<"    Midpoint added, index = " + index + "\n";
         }
         else{
           index = midPointIndices->find(key)->second;
+          std::cout<<"    Midpoint found, index = " + index +"\n";
         }
         return(index);
 }
@@ -497,7 +503,9 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 {
     std::multimap<long, int> midPointIndices;
     int nFaces = facesIn->size();
+    std::cout<<"  Midpoint map, face counter initialized\n";
 
+    std::cout<<"  Beginning midpoint finding\n";
     for (int i = 0; i < level; i++) {
 
           for(int j = 0; j < nFaces; ++j) {
@@ -610,6 +618,7 @@ void createSphere(void)
     //----------------------------------------------------------------
     std::vector<TriangleIndices> newfaces;
     int levels = 3;
+    std::cout<<"Beginning subdivision\n";
     subDivideTriangles(levels, &faces, &newfaces, &vertices);
     std::cout<<"Subdivision Complete\n";
 
