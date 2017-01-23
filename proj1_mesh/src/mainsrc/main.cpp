@@ -464,7 +464,7 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
           STVector3 mid = STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
 
           offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
-          index = vertices->size();
+          index = vertices->size()-1;
           midPointIndices->insert(std::pair<long, int>(key, index));
         }
         else{
@@ -485,7 +485,7 @@ void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vecto
     temp = vertices->at(i);
     tmesh->AddVertex(temp.x, temp.y, temp.z);
   }
-  tmesh->AddFace(face.i1-1, face.i2-1, face.i3-1);
+  tmesh->AddFace(face.i1, face.i2, face.i3);
 }
 
 
@@ -524,26 +524,26 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 //-------------------------------------------------------
 void initFaces(std::vector<TriangleIndices> *faces)
 {
-  faces->push_back(makeTIndices(11, 1, 8));
-  faces->push_back(makeTIndices(12, 1, 11));
-  faces->push_back(makeTIndices(6, 1, 12));
-  faces->push_back(makeTIndices(2, 1, 6));
-  faces->push_back(makeTIndices(8, 1, 2));
-  faces->push_back(makeTIndices(3, 12, 11));
-  faces->push_back(makeTIndices(3, 11, 7));
-  faces->push_back(makeTIndices(3, 7, 4));
-  faces->push_back(makeTIndices(3, 4, 5));
-  faces->push_back(makeTIndices(3, 5, 12));
-  faces->push_back(makeTIndices(10, 2, 6));
-  faces->push_back(makeTIndices(10, 6, 5));
-  faces->push_back(makeTIndices(10, 5, 4));
-  faces->push_back(makeTIndices(10, 4, 9));
-  faces->push_back(makeTIndices(10, 9, 2));
-  faces->push_back(makeTIndices(6, 12, 5));
-  faces->push_back(makeTIndices(2, 9, 8));
-  faces->push_back(makeTIndices(7, 8, 9));
-  faces->push_back(makeTIndices(7, 11, 8));
-  faces->push_back(makeTIndices(7, 9, 4));
+  faces->push_back(makeTIndices(10, 0, 7));
+  faces->push_back(makeTIndices(11, 0, 10));
+  faces->push_back(makeTIndices(5, 0, 11));
+  faces->push_back(makeTIndices(1, 0, 5));
+  faces->push_back(makeTIndices(7, 0, 1));
+  faces->push_back(makeTIndices(2, 11, 10));
+  faces->push_back(makeTIndices(2, 10, 6));
+  faces->push_back(makeTIndices(2, 6, 3));
+  faces->push_back(makeTIndices(2, 3, 4));
+  faces->push_back(makeTIndices(2, 4, 11));
+  faces->push_back(makeTIndices(9, 1, 5));
+  faces->push_back(makeTIndices(9, 5, 4));
+  faces->push_back(makeTIndices(9, 4, 3));
+  faces->push_back(makeTIndices(9, 3, 8));
+  faces->push_back(makeTIndices(9, 8, 1));
+  faces->push_back(makeTIndices(5, 11, 4));
+  faces->push_back(makeTIndices(1, 8, 7));
+  faces->push_back(makeTIndices(6, 7, 8));
+  faces->push_back(makeTIndices(6, 10, 7));
+  faces->push_back(makeTIndices(6, 8, 3));
 }
 
 
