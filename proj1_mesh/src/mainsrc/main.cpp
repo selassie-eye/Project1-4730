@@ -472,6 +472,7 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
           STVector3 point2 = vertices->at(smaller);
           STVector3 mid = STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
 
+          std::cout<<"    Offset starts here\n";
           offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
           index = vertices->size()-1;
           midPointIndices->insert(std::pair<long, int>(key, index));
@@ -544,26 +545,55 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 //-------------------------------------------------------
 void initFaces(std::vector<TriangleIndices> *faces)
 {
-  faces->push_back(makeTIndices(10, 0, 7));
-  faces->push_back(makeTIndices(11, 0, 10));
-  faces->push_back(makeTIndices(5, 0, 11));
-  faces->push_back(makeTIndices(1, 0, 5));
-  faces->push_back(makeTIndices(7, 0, 1));
-  faces->push_back(makeTIndices(2, 11, 10));
-  faces->push_back(makeTIndices(2, 10, 6));
-  faces->push_back(makeTIndices(2, 6, 3));
-  faces->push_back(makeTIndices(2, 3, 4));
-  faces->push_back(makeTIndices(2, 4, 11));
-  faces->push_back(makeTIndices(9, 1, 5));
-  faces->push_back(makeTIndices(9, 5, 4));
-  faces->push_back(makeTIndices(9, 4, 3));
-  faces->push_back(makeTIndices(9, 3, 8));
-  faces->push_back(makeTIndices(9, 8, 1));
+
+  // 5 faces around point 0
+  faces->push_back(makeTIndices(0, 11, 5));
+  faces->push_back(makeTIndices(0, 5, 1));
+  faces->push_back(makeTIndices(0, 1, 7));
+  faces->push_back(makeTIndices(0, 7, 10));
+  faces->push_back(makeTIndices(0, 10, 11));
+
+  // 5 adjacent faces
+  faces->push_back(makeTIndices(1, 5, 9));
   faces->push_back(makeTIndices(5, 11, 4));
-  faces->push_back(makeTIndices(1, 8, 7));
-  faces->push_back(makeTIndices(6, 7, 8));
-  faces->push_back(makeTIndices(6, 10, 7));
-  faces->push_back(makeTIndices(6, 8, 3));
+  faces->push_back(makeTIndices(11, 10, 2));
+  faces->push_back(makeTIndices(10, 7, 6));
+  faces->push_back(makeTIndices(7, 1, 8));
+
+  // 5 faces around point 3
+  faces->push_back(makeTIndices(3, 9, 4));
+  faces->push_back(makeTIndices(3, 4, 2));
+  faces->push_back(makeTIndices(3, 2, 6));
+  faces->push_back(makeTIndices(3, 6, 8));
+  faces->push_back(makeTIndices(3, 8, 9));
+
+  // 5 adjacent faces
+  faces->push_back(makeTIndices(4, 9, 5));
+  faces->push_back(makeTIndices(2, 4, 11));
+  faces->push_back(makeTIndices(6, 2, 10));
+  faces->push_back(makeTIndices(8, 6, 7));
+  faces->push_back(makeTIndices(9, 8, 1));
+
+  // faces->push_back(makeTIndices(10, 0, 7));
+  // faces->push_back(makeTIndices(11, 0, 10));
+  // faces->push_back(makeTIndices(5, 0, 11));
+  // faces->push_back(makeTIndices(1, 0, 5));
+  // faces->push_back(makeTIndices(7, 0, 1));
+  // faces->push_back(makeTIndices(2, 11, 10));
+  // faces->push_back(makeTIndices(2, 10, 6));
+  // faces->push_back(makeTIndices(2, 6, 3));
+  // faces->push_back(makeTIndices(2, 3, 4));
+  // faces->push_back(makeTIndices(2, 4, 11));
+  // faces->push_back(makeTIndices(9, 1, 5));
+  // faces->push_back(makeTIndices(9, 5, 4));
+  // faces->push_back(makeTIndices(9, 4, 3));
+  // faces->push_back(makeTIndices(9, 3, 8));
+  // faces->push_back(makeTIndices(9, 8, 1));
+  // faces->push_back(makeTIndices(5, 11, 4));
+  // faces->push_back(makeTIndices(1, 8, 7));
+  // faces->push_back(makeTIndices(6, 7, 8));
+  // faces->push_back(makeTIndices(6, 10, 7));
+  // faces->push_back(makeTIndices(6, 8, 3));
 }
 
 
