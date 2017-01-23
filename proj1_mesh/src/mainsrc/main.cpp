@@ -583,19 +583,25 @@ void createSphere(void)
 
     // triangle mesh object
     std::vector<STTriangleMesh *> gTriangleMeshes_sphere;
+    std::cout<<"Mesh initialized\n";
 
     // vertices
     std::vector<STVector3> vertices;
+    std::cout<<"Vertices initialized\n";
 
     // Creates the initial verticies
     initVertices(&vertices);
+    std::cout<<"Vertices assigned\n";
 
     //-----------------------------------------------------
     // TO DO: create the faces of the intIcosahedron
     // Place your code in the function initFaces()
     //-----------------------------------------------------
     std::vector<TriangleIndices> faces;
+    std::cout<<"Faces initialized\n";
     initFaces(&faces);
+    std::cout<<"Faces assigned\n";
+
 
     //---------------------------------------------------------------
     // TO DO: Recursively split each triangle into four triangles
@@ -605,6 +611,7 @@ void createSphere(void)
     std::vector<TriangleIndices> newfaces;
     int levels = 3;
     subDivideTriangles(levels, &faces, &newfaces, &vertices);
+    std::cout<<"Subdivision Complete\n";
 
     //-----------------------------------------------------------------
     // TO DO: Once faces are generated, add each triangle to the
@@ -612,14 +619,17 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
+    std::cout<<"Beginning createMySphereMesh\n";
     for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
       createMySphereMesh(*gTriangleMeshes_sphere.end(), *it, &vertices);
     }
+    std::cout<<"CreateMySphereMesh complete\n";
 
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
         gTriangleMeshes_sphere[id]->Write("..\..\data\meshes\mysphere.obj");
 
+        std::cout<<"Sphere saved\n";
 }
 
 
