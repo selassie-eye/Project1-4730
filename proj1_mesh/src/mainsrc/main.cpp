@@ -520,12 +520,12 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
         long key = (smaller << 32) + larger;
         int index = 0;
 
-        if (midPointIndices.count(key) == 0){
-          STVector3 point1 = vertices[larger-1];
-          STVector3 point2 = vertices[smaller-1];
-          STVector3 mid = new STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
+        if (midPointIndices->count(key) == 0){
+          STVector3 *point1 = vertices[larger-1];
+          STVector3 *point2 = vertices[smaller-1];
+          STVector3 *mid = new STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
 
-          offset(mid, &vertices, (1.0 + sqrtf(5.0))/2.0);
+          offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
           index = vertices->size();
           midPointIndices->insert(std::pair<long, int>(key, index));
         }
@@ -674,7 +674,7 @@ void createSphere(void)
 
     int i = 0;
     for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
-      createMySphereMesh(gTriangleMeshes_sphere[i], *it, vertices);
+      createMySphereMesh(gTriangleMeshes_sphere[i], *it, &vertices);
     }
 
     // save the result sphere
