@@ -455,7 +455,7 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 {
         int larger = p1 > p2 ? p1 : p2;
         int smaller = p1 < p2 ? p1 : p2;
-        long key = (smaller << 32) + larger;
+        long key = (smaller << 16) + larger;
         int index = 0;
 
         if (midPointIndices->count(key) == 0){
