@@ -612,9 +612,8 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
-    int i = 0;
     for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
-      createMySphereMesh(gTriangleMeshes_sphere[i], *it, &vertices);
+      createMySphereMesh(*gTriangleMeshes_sphere.end(), *it, &vertices);
     }
 
     // save the result sphere
