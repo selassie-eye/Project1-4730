@@ -637,7 +637,7 @@ void createSphere(void)
     //-----------------------------------------------------------------
 
     std::cout<<"Beginning createMySphereMesh\n";
-    STTriangleMesh *temp;
+    STTriangleMesh *temp = new STTriangleMesh();
     for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
       createMySphereMesh(temp, *it, &vertices);
       gTriangleMeshes_sphere.push_back(temp);
