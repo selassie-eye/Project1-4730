@@ -213,7 +213,7 @@ void ZoomCamera(float delta_y)
     STVector3 direction = mLookAt - mPosition;
     float magnitude = direction.Length();
     direction.Normalize();
-    float zoom_rate = 0.f*magnitude < 0.5f ? .f*magnitude : .5f;
+    float zoom_rate = 0.f*magnitude < 0.5f ? .1f*magnitude : .5f;
     if(delta_y * zoom_rate + magnitude > 0)
     {
         mPosition += (delta_y * zoom_rate) * direction;
@@ -332,7 +332,7 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 	// Set up a perspective projection
     float aspectRatio = (float) gWindowSizeX / (float) gWindowSizeY;
-	gluPerspective(30.0f, aspectRatio, .f, 10000.0f);
+	gluPerspective(30.0f, aspectRatio, .1f, 10000.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
