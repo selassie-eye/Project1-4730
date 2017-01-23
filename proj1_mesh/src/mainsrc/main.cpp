@@ -523,7 +523,7 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
         if (midPointIndices->count(key) == 0){
           STVector3 point1 = vertices->at(larger-1);
           STVector3 point2 = vertices->at(smaller-1);
-          STVector3 mid = new STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
+          STVector3 *mid = new STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
 
           offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
           index = vertices->size();
