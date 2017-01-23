@@ -658,6 +658,7 @@ void createSphere(void)
     gTriangleMeshes_sphere.back()->mShininess=8.0f;
 
     // save the result sphere
+    std::cout<<"Mesh size: " << gTriangleMeshes_sphere.size() << "\n";
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
         gTriangleMeshes_sphere[id]->Write("..\..\data\meshes\mysphere.obj");
 
