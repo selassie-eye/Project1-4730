@@ -676,11 +676,9 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
-<<<<<<< HEAD
     for(int i = 0; i < faces.size(); i++){
       createMySphereMesh(gTriangleMeshes_sphere[0], faces.at(i), &vertices);
     }
-=======
     std::cout<<"Beginning createMySphereMesh\n";
     STTriangleMesh *temp = new STTriangleMesh();
     for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
@@ -700,7 +698,6 @@ void createSphere(void)
     gTriangleMeshes_sphere.back()->mMaterialSpecular[1]=0.6f;
     gTriangleMeshes_sphere.back()->mMaterialSpecular[2]=0.6f;
     gTriangleMeshes_sphere.back()->mShininess=8.0f;
->>>>>>> branch-1
 
     // save the result sphere
     std::cout<<"Mesh size: " << gTriangleMeshes_sphere.size() << "\n";
@@ -773,12 +770,9 @@ void KeyCallback(unsigned char key, int x, int y)
     case '1':
         createSphere();
         break;
-<<<<<<< HEAD
     case '2':
         CreateYourOwnMesh();
         break;
-=======
->>>>>>> branch-1
 	case 'q':
 		exit(0);
     default:
@@ -787,11 +781,6 @@ void KeyCallback(unsigned char key, int x, int y)
 
     glutPostRedisplay();
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> branch-1
-
 
 //-------------------------------------------------
 // main program loop
