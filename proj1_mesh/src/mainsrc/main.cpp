@@ -481,7 +481,7 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vector<STVector3> *vertices)
 {
   STVector3 temp;
-  for (int i = 0; tmesh->mVertices.size() != vertices->size(); i++){
+  for (int i = 0; tmesh->mVertices->size() != vertices->size(); i++){
     temp = vertices->at(i);
     tmesh->AddVertex(temp.x, temp.y, temp.z);
   }
