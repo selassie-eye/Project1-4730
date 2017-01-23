@@ -470,11 +470,11 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
           offset(mid, vertices, (1.0 + sqrtf(5.0))/2.0);
           index = vertices->size()-1;
           midPointIndices->insert(std::pair<long, int>(key, index));
-          std::cout<<"    Midpoint added, index = " + index + "\n";
+          std::cout<<"    Midpoint added, index = " << index << "\n";
         }
         else{
           index = midPointIndices->find(key)->second;
-          std::cout<<"    Midpoint found, index = " + index +"\n";
+          std::cout<<"    Midpoint found, index = " << index << "\n";
         }
         return(index);
 }
