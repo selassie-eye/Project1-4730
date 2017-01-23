@@ -440,7 +440,7 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
 
     return(globalCount + 1);
     std::cout<<"    OFFSET!\n";
-    std::ofstream debug = ("../../data/meshes/debug.txt", std::ofstream:out);
+    std::ofstream debug = ("../../data/meshes/debug.txt", std::ofstream::out);
     debug << "OFFSET!\n";
     debug.close();
 
