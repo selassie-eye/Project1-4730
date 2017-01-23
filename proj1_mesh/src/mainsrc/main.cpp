@@ -213,7 +213,7 @@ void ZoomCamera(float delta_y)
     STVector3 direction = mLookAt - mPosition;
     float magnitude = direction.Length();
     direction.Normalize();
-    float zoom_rate = 0.1f*magnitude < 0.5f ? .1f*magnitude : .5f;
+    float zoom_rate = 0.f*magnitude < 0.5f ? .f*magnitude : .5f;
     if(delta_y * zoom_rate + magnitude > 0)
     {
         mPosition += (delta_y * zoom_rate) * direction;
@@ -332,7 +332,7 @@ void ReshapeCallback(int w, int h)
     glLoadIdentity();
 	// Set up a perspective projection
     float aspectRatio = (float) gWindowSizeX / (float) gWindowSizeY;
-	gluPerspective(30.0f, aspectRatio, .1f, 10000.0f);
+	gluPerspective(30.0f, aspectRatio, .f, 10000.0f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -512,9 +512,23 @@ int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
 //-----------------------------------------------------------------------
 int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vector<STVector3> *vertices)
 {
-
+        int larger = p1 > p2 ? p1 : p2;
+        int smaller = p1 < p2 ? p1 : p2;
+        long key = (smaller << 32) + larger;
         int index = 0;
 
+        if (midPointIndices.count(key) == 0){
+          STVector3 point1 = vertices[larger-1];
+          STVector3 point2 = vertices[smaller-1];
+          STVector3 mid = new STVector3((point1.x - point2.x)/2, (point1.y - point2.y)/2, (point1.z - point2.z)/2);
+
+          offset(mid, &vertices, (1.0 + sqrtf(5.0))/2.0);
+          index = vertices->size();
+          midPointIndices->insert(std::pair<long, int>(key, index));
+        }
+        else{
+          index = midPointIndices->find(key)->second;
+        }
         return(index);
 }
 
@@ -525,7 +539,10 @@ int midPoint(int p1, int p2, std::multimap<long, int> *midPointIndices, std::vec
 //-----------------------------------------------------------
 void createMySphereMesh(STTriangleMesh  *tmesh, TriangleIndices face, std::vector<STVector3> *vertices)
 {
-
+  for (int i = 0; tmesh->mVertices.size() != vertices->size(); i++){
+    tmesh->addVertex(vertices[i]);
+  }
+  tmesh->addFace(face.i1-1, face.i2-1, face.i3-1);
 }
 
 
@@ -564,7 +581,26 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
 //-------------------------------------------------------
 void initFaces(std::vector<TriangleIndices> *faces)
 {
-
+  faces->push_back(makeTIndices(11, 1, 8));
+  faces->push_back(makeTIndices(12, 1, 11));
+  faces->push_back(makeTIndices(6, 1, 12));
+  faces->push_back(makeTIndices(2, 1, 6));
+  faces->push_back(makeTIndices(8, 1, 2));
+  faces->push_back(makeTIndices(3, 12, 11));
+  faces->push_back(makeTIndices(3, 11, 7));
+  faces->push_back(makeTIndices(3, 7, 4));
+  faces->push_back(makeTIndices(3, 4, 5));
+  faces->push_back(makeTIndices(3, 5, 12));
+  faces->push_back(makeTIndices(10, 2, 6));
+  faces->push_back(makeTIndices(10, 6, 5));
+  faces->push_back(makeTIndices(10, 5, 4));
+  faces->push_back(makeTIndices(10, 4, 9));
+  faces->push_back(makeTIndices(10, 9, 2));
+  faces->push_back(makeTIndices(6, 12, 5));
+  faces->push_back(makeTIndices(2, 9, 8));
+  faces->push_back(makeTIndices(7, 8, 9));
+  faces->push_back(makeTIndices(7, 11, 8));
+  faces->push_back(makeTIndices(7, 9, 4));
 }
 
 
@@ -633,7 +669,11 @@ void createSphere(void)
     // mesh. Place your code in createMySphereMesh()
     //-----------------------------------------------------------------
 
-
+    int i = 0;
+    for (std::vector<TriangleIndices>::iterator it = newfaces.begin(); it != newfaces.end(); ++it){
+      createMySphereMesh(gTriangleMeshes_sphere[i], *it, vertices);
+    }
+    
     // save the result sphere
     for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
         gTriangleMeshes_sphere[id]->Write("..\..\data\meshes\mysphere.obj");

@@ -1,0 +1,5 @@
+In file included from /Users/khariollivierre/Project1-4730/proj1_mesh/src/mainsrc/main.cpp:7:
+/Users/khariollivierre/Project1-4730/proj1_mesh/src/mainsrc/stglew.h:26:10: fatal error: 'st.h' file not found
+#include "st.h"
+         ^
+1 error generated.
