@@ -434,7 +434,7 @@ TriangleIndices makeTIndices(int a, int b, int c)
 int offset(STVector3 p, std::vector<STVector3> *vertices,double radius)
 {
 
-    double length = sqrtf(p.x * p.x + p.y * p.y + p.z * p.z);
+    double length = sqrtf((p.x * p.x) + (p.y * p.y) + (p.z * p.z));
 
     vertices->push_back(STVector3(p.x*radius/length, p.y*radius/length, p.z*radius/length));
 
@@ -624,6 +624,12 @@ void initVertices(std::vector<STVector3> *vertices)
     vertices->push_back(STVector3(pos,   0,  1));
     vertices->push_back(STVector3(-pos,  0, -1));
     vertices->push_back(STVector3(-pos,  0,  1));
+
+    std::vector<STVector3> temp;
+    for(int i = 0; i < vertices->size(); i++){
+      offset(vertices->at(i), temp, (1.0 + sqrtf(5.0))/2.0;);
+    }
+    vertices = temp;
 }
 
 
