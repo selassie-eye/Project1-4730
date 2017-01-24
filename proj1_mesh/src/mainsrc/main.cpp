@@ -759,7 +759,7 @@ void KeyCallback(unsigned char key, int x, int y)
            gTriangleMeshes.back()->LoopSubdivide();
         }
 	    if(proxyType) gTriangleMeshes.back()->CalculateTextureCoordinatesViaSphericalProxy();
-			   else gTriangleMeshes.back()->CalculateTextureCoordinatesViaCylindricalProxy();
+			   //else gTriangleMeshes.back()->CalculateTextureCoordinatesViaCylindricalProxy();
          gTriangleMeshes.back()->Write("../../data/meshes/temp.obj");
          meshOBJ = std::string("../../data/meshes/temp.obj");
          Setup();
