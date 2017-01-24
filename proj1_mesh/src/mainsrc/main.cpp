@@ -42,10 +42,10 @@ static float specularLight[] = {1.00, 1.00, 1.00, 1.0};
 
 float lightPosition[] = {10.0f, 15.0f, 10.0f, 1.0f};
 
-STImage   surfaceNormImg = new STImage("../../data/images/world_map.jpeg");
+STImage   *surfaceNormImg = new STImage("../../data/images/world_map.jpeg");
 STTexture *surfaceNormTex;
 
-STImage   surfaceDisplaceImg = new STImage("../../data/images/world_map.jpeg");
+STImage   *surfaceDisplaceImg = new STImage("../../data/images/world_map.jpeg");
 STTexture *surfaceDisplaceTex;
 
 STShaderProgram *shader;
