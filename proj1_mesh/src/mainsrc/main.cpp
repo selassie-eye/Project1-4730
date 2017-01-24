@@ -709,9 +709,9 @@ void createSphere(void)
     //for(unsigned int id=0;id<gTriangleMeshes_sphere.size(); id++)
         //gTriangleMeshes_sphere[id]->Write("../../data/meshes/mysphere.obj");
         gTriangleMeshes_sphere.back()->Write("../../data/meshes/mysphere.obj");
-
-
         std::cout<<"Sphere saved, globalCount = " << globalCount << "\n";
+        meshOBJ = std::string("../../data/meshes/mysphere.obj");
+        Setup();
 }
 
 
@@ -756,9 +756,14 @@ void KeyCallback(unsigned char key, int x, int y)
     //---------------------------------
     case 'l':
        if(mesh){
-           gTriangleMesh->LoopSubdivide();
-	  if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
-			else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy();
+           gTriangleMeshes.back()->LoopSubdivide();
+           gTriangleMeshes.back()->Write("../../data/meshes/temp.obj");
+           meshOBJ = std::string("../../data/meshes/temp.obj");
+           Setup();
+        }
+        break;
+	  // if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
+		// 	else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy();
     case 'f': // switch between smooth shading and flat shading
         smooth = !smooth;
         break;
