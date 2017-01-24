@@ -525,22 +525,22 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
     std::cout<<"  Midpoint map, face counter initialized\n";
 
     std::cout<<"  Beginning midpoint finding\n";
-    std::vector<TriangleIndices> *temp;
+    std::vector<TriangleIndices> temp;
     for (int i = 0; i < level; i++) {
-          temp->clear();
+          temp.clear();
           for(int j = 0; j < nFaces; ++j) {
 
               int a = midPoint((*facesIn)[j].i1, (*facesIn)[j].i2, &midPointIndices, vertices);
               int b = midPoint((*facesIn)[j].i2, (*facesIn)[j].i3, &midPointIndices, vertices);
               int c = midPoint((*facesIn)[j].i3, (*facesIn)[j].i1, &midPointIndices, vertices);
 
-              temp->push_back(makeTIndices((*facesIn)[j].i1, a, c));
-              temp->push_back(makeTIndices((*facesIn)[j].i2, b, a));
-              temp->push_back(makeTIndices((*facesIn)[j].i3, c, b));
-              temp->push_back(makeTIndices(a, b, c));
+              temp.push_back(makeTIndices((*facesIn)[j].i1, a, c));
+              temp.push_back(makeTIndices((*facesIn)[j].i2, b, a));
+              temp.push_back(makeTIndices((*facesIn)[j].i3, c, b));
+              temp.push_back(makeTIndices(a, b, c));
           }
-          (*facesIn) = *temp;
-          nFaces=temp->size();
+          (&facesIn) = temp;
+          nFaces=temp.size();
     }
     *facesOut = *temp;
 }
