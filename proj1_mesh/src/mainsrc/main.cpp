@@ -539,10 +539,10 @@ void subDivideTriangles(int level, std::vector<TriangleIndices> *facesIn,  std::
               temp.push_back(makeTIndices((*facesIn)[j].i3, c, b));
               temp.push_back(makeTIndices(a, b, c));
           }
-          facesIn = *temp;
+          *facesIn = temp;
           nFaces=temp.size();
     }
-    facesOut = *temp;
+    *facesOut = temp;
 }
 
 
