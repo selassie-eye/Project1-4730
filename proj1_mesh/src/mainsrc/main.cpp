@@ -42,10 +42,10 @@ static float specularLight[] = {1.00, 1.00, 1.00, 1.0};
 
 float lightPosition[] = {10.0f, 15.0f, 10.0f, 1.0f};
 
-STImage   *surfaceNormImg;
+STImage   surfaceNormImg = new STImage("../../data/images/world_map.jpeg");
 STTexture *surfaceNormTex;
 
-STImage   *surfaceDisplaceImg;
+STImage   surfaceDisplaceImg = new STImage("../../data/images/world_map.jpeg");
 STTexture *surfaceDisplaceTex;
 
 STShaderProgram *shader;
@@ -62,7 +62,7 @@ int gMouseButton = -1;
 bool mesh = false; // draw mesh
 bool smooth = true; // smooth/flat shading for mesh
 bool normalMapping = true; // true=normalMapping, false=displacementMapping
-bool proxyType=false; // false: use cylinder; true: use sphere
+bool proxyType=true; // false: use cylinder; true: use sphere
 
 std::vector<STTriangleMesh*> gTriangleMeshes;
 STPoint3 gMassCenter;
@@ -153,10 +153,10 @@ void Setup()
     glLightfv(GL_LIGHT0, GL_AMBIENT,   ambientLight);
     glLightfv(GL_LIGHT0, GL_DIFFUSE,   diffuseLight);
 
-    surfaceNormImg = new STImage(normalMap);
+    //surfaceNormImg = new STImage(normalMap);
     surfaceNormTex = new STTexture(surfaceNormImg);
 
-    surfaceDisplaceImg = new STImage(displacementMap);
+    //surfaceDisplaceImg = new STImage(displacementMap);
     surfaceDisplaceTex = new STTexture(surfaceDisplaceImg);
 
     shader = new STShaderProgram();
@@ -757,13 +757,13 @@ void KeyCallback(unsigned char key, int x, int y)
     case 'l':
        if(mesh){
            gTriangleMeshes.back()->LoopSubdivide();
-           gTriangleMeshes.back()->Write("../../data/meshes/temp.obj");
-           meshOBJ = std::string("../../data/meshes/temp.obj");
-           Setup();
         }
-        break;
-	  // if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
-		// 	else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy();
+	    if(proxyType) gTriangleMeshes.back()->CalculateTextureCoordinatesViaSphericalProxy();
+			   else gTriangleMeshes.back()->CalculateTextureCoordinatesViaCylindricalProxy();
+         gTriangleMeshes.back()->Write("../../data/meshes/temp.obj");
+         meshOBJ = std::string("../../data/meshes/temp.obj");
+         Setup();
+         break;
     case 'f': // switch between smooth shading and flat shading
         smooth = !smooth;
         break;
