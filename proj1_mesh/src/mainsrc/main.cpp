@@ -754,11 +754,11 @@ void KeyCallback(unsigned char key, int x, int y)
     // simply make sure you are calling the functions
     // on the correct mesh.
     //---------------------------------
-    //case 'l':
-    //    if(mesh){
-    //        gTriangleMesh->LoopSubdivide();
-	//   if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
-	//		else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy(-
+    case 'l':
+       if(mesh){
+           gTriangleMesh->LoopSubdivide();
+	  if(proxyType) gTriangleMesh->CalculateTextureCoordinatesViaSphericalProxy();
+			else gTriangleMesh->CalculateTextureCoordinatesViaCylindricalProxy();
     case 'f': // switch between smooth shading and flat shading
         smooth = !smooth;
         break;
